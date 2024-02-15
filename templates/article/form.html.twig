@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title%}form article{% endblock%}
+
+{% block body%}
+
+<div>
+    <h1>Article</h1>
+
+    {{form_start(form)}}
+    {{form_widget(form)}}
+    <button>Enregistrer</button>
+    {{form_end(form)}}
+
+    
+</div>
+
+{%endblock%}

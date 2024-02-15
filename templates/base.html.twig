@@ -2,16 +2,66 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Entrainement{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+             <link rel="stylesheet" href="{{asset('css/style.css')}}">
+             <link rel="stylesheet" href="{{asset('fontawesome-free-6.5.1-web/css/all.css')}}">
         {% endblock %}
 
         {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="{{asset('js/myScript.js')}}" defer></script>
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div id="wrapper">
+        <header>
+            <h1>Gareva</h1>
+            <nav>
+                <ul class="ul">
+                    <li><a href="/">Acceuil</a></li>
+                    <li><a href="/article">Article</a></li>
+                    <li><a href="/">Client</a></li>
+                    <li><a href="/">User</a></li>
+                    <li><a href="/">LigneCommande</a></li>
+                </ul>
+                
+                <div class="search">
+                    
+
+                        <input type="text" autocomplete="off" id="mot" name="mot" onkeydown="touche(event)">
+                        <button onclick="chercher()">Rechercher</button>
+                        
+                        <a><i class="fa fa-user fa-2x"></i>MK</a>
+                        <ul class="dropdown-menu w100 bg_blue">
+                            <li class="nav-item w100 p-2"><a href="/" class="nav-link">Se connecter</a></li>
+                            <li class="nav-item w100 p-2"><a href="" class="nav-link">S'inscrire</a></li>
+                            <li class="nav-item w100 p-2"><a href="" class="nav-link">Deconnexion</a></li>
+                        </ul>
+                    
+                </div>
+            </nav>
+        </header>
+        <main id="main">
+            <section>
+                <div id="section">
+                    {% block body %}{% endblock %}
+                </div>
+            </section>
+            <aside>
+                <div id="aside">
+                    <h2>aside</h2>
+                </div>
+            </aside>
+        </main>
+        <footer>
+            <div id="footer">
+                <h2>footer</h2>
+            </div>
+        </footer>
+    </div>
+     {% block script %}
+     {% endblock %}  
     </body>
 </html>

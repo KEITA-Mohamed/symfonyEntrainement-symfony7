@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+
+
+    <h1>Listes Des Articles</h1>
+
+    <div class="btn">
+        <a href="javascript:create()">nouveau client</a>
+        <a href="javascript:show()">Afficher</a>
+        <a href="javascript:modify()">modifier</a>
+        <a href="javascript:delete()">suprimer</a>
+        <a href="javascript:writeExcel()">Afficher</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>NUMARTICLE</td>
+                <td>DESIGNATION</td>
+                <td>PRIXUNITAIRE</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td><input type="checkbox" name="check" value="{{article.id}}" id="{{article.id}}" onclick="onlyOne(this)"></td>
+                <td>{{article.id}}</td>
+                <td>{{article.numArticle}}</td>
+                <td>{{article.designation}}</td>
+                <td>{{article.prixUnitaire}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    {{nbr}}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+    const url_edit="/article/edit/id";
+
+
+function modify(){
+
+    const id = getIdChecked('check');
+    const url=url_edit.replace('id',id);
+
+    document.location.href=url;
+}
+
+
+</script>
+{% endblock %}
