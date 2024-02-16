@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientController!{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="">Afficher</a>
+        <a href="javascript:modify()">Modifier</a>
+        <a href="">Creer</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>NUMCLIENT</td>
+                <td>NOMCLIENT</td>
+                <td>ADRESSECLIENT</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td><input type="checkbox" id="{{client.id}}" name="check" value="{{client.id}}" onclick='onlyOne(this)'></td>
+                <td>{{client.id}}</td>
+                <td>{{client.numClient}}</td>
+                <td>{{client.nomClient}}</td>
+                <td>{{client.adresseClient}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>le nombre de client est de:{{nbr}}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
+
+{% block script %}
+
+    <script>
+    const url_edit="/client/edit/id";
+
+    function modify(){
+    
+    const id = getIdChecked('check');
+    const url=url_edit.replace('id',id);
+    
+    document.location.href=url;
+    }
+
+    </script>
+
+{% endblock %}

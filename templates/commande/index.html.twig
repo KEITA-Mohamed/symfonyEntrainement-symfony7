@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste des commandes{% endblock %}
+
+{% block body %}
+
+<a href="javascript:creer()">Nouveau<a>
+
+<table>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>NUMCOMMANDE</td>
+            <td>DATECOMMANDE</td>
+            <td>ACTION</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for commande in commandes %}
+
+            <tr>
+                <td>{{commande.id}}</td>
+                <td>{{commande.numCommande}}</td>
+                <td>{{commande.dateCommande ? commande.dateCommande|date('d/m/Y H:i:s'): ''}}</td>
+                <td>
+                    <a href="{{path('app_commande_show', {'id': commande.id})}}">Afficher</a>
+                    <a href="">Contenu</a>
+                    <a href="{{path('app_commande_edit', {'id': commande.id })}}">Modifier</a>
+                    <a href="{{path('app_commande_delete', {'id': commande.id})}}">Supprimer</a>
+                </td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block script %}
+
+    <script>
+
+        const url_edit="{{path('app_commande_edit', {'id':'id'}) }}";
+  
+
+        function creer(){
+
+            const url=url_edit.replace('id',0);
+
+            document.location.href=url;
+        }
+
+
+    </script>
+
+{% endblock %}

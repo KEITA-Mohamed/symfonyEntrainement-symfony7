@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Affichage Commande {% endblock %}
+
+{%  block body %} 
+
+  <div>
+    <p>
+        <label for="numCommande">N°</label>
+        <input type="text" value="{{commande.numCommande}}" id="{{commande.numCommande}}">
+    </p>
+    <p>
+        <label for="dateCommande">dateCommande</label>
+        <input type="date" value="{{commande.dateCommande|date('d/m/Y')}}" id="date">
+    </p>
+    <p>
+        <label for="client">Client</label>
+        <input type="text" value="{{commande.client.nomClient}}" id="">
+    </p>
+  </div>
+
+{% endblock %}

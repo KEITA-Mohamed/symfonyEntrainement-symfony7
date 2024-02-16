@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Client {% endblock %}
+
+{% block body %}
+
+{{form_start(form)}}
+{{form_widget(form)}}
+<button>save</button>
+{{form_end(form)}}
+
+{% endblock %}
