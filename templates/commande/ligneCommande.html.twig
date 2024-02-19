@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block titel %} contenu commande {% endblock %}
+
+{% block body %}
+
+
+  <div>
+    <p>
+        <label for="id">ID</label>
+        <input type="text" value="{{commande.id}}" name="id" id="id">
+    </p>
+    <p>
+        <label for="numCommande">NumCommande</label>
+        <input type="text" value="{{commande.numCommande}}" name="numCommande" id="numCommande">
+    </p>
+    <p>
+        <label for="dateCommande">DateCommande</label>
+        <input type="date" value="{{commande.dateCommande|date('d/m/Y')}}" name="dateCommande" id="dateCommande">
+    </p>
+    <p>
+        <label for="client">Client</label>
+        <input type="text" value="{{commande.client.nomClient}}" name="client" id="client">
+    </p>
+    <p id='total'>
+        total: {{total ~ ' €'}}
+    </p>
+  </div>
+
+  <table>
+    <thead>
+        <tr>
+            <th>CODE</th>
+            <th>Designation</th>
+            <th>Prix</th>
+            <th>Quantite</th>
+            <th>Montant</th>
+        </tr>
+        <tr>
+            <th><input type="text" value="" name="numArticle" id="numArticle" onkeydown="searchCode(event)"></th>
+            <th id="designation"></th>
+            <th id="prixUnitaire"></th>
+            <th><input type="text" value="" name="quantite" id="quantite" onkeydown="submitCommande(event)"></th>
+            <th></th>
+            <th><button>valider</button></th>
+        </tr>
+    </thead>
+    <tbody id='tbody_ligcom'>
+
+        {% for row in rows %}
+        <tr>
+            <td>{{row.numArticle}}</td>
+            <td>{{row.designation}}</td>
+            <td>{{row.prixUnitaire}}</td>
+            <td>{{row.montant}}</td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td id="tfoot_total">Totale: {{total ~ ' €'}}</td>
+        </tr>
+    </tfoot>
+  </table>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+
+    const url_search="{{path('app_commande_search_code')}}";
+    const url_submit="{{path('app_commande_submit')}}";
+
+    function submitCommande(event){
+        if(event.keyCode==13)
+        {
+
+           // alert('test');
+
+            let xhr=new XMLHttpRequest();
+            xhr.open("POST", url_submit);
+
+            let data = new FormData();
+            data.append('numArticle',numArticle.value);
+            data.append('quantite',quantite.value);
+            data.append('commande_id',id.value);
+            xhr.send(data);
+
+            xhr.onload=()=>{
+
+                let response = xhr.responseText;
+               // alert(response);
+
+                let responses=JSON.parse(response);
+
+                const total_commande=responses['total'];
+                const rows=responses['rows'];
+
+                total.innerHTML=total_commande+" €";
+                tfoot_total.innerHTML=total_commande;
+
+                let html=rows.map(function(row){
+
+                    return`
+                    
+                        <tr>
+                        <td>${row.numArticle}</td>
+                        <td>${row.designation}</td>
+                        <td>${row.prixUnitaire}</td>
+                        <td>${row.quantite}</td>
+                        <td>${row.montant}</td>
+                        </tr>
+
+                    `
+                }).join('');
+
+                tbody_ligcom.innerHTML=html;
+                numArticle.value='';
+                    quantite.value='';
+                    designation.innerHTML='';
+                    prixUnitaire.innerHTML='';
+               
+            }
+        }
+    }
+
+    function searchCode(event){   
+        if(event.keyCode==13)
+        {
+            //alert("test");
+         
+            let xhr=new XMLHttpRequest();
+    
+            xhr.open('POST',url_search);
+
+            let data=new FormData();
+            data.append('numArticle',numArticle.value);
+            xhr.send(data);
+    
+            xhr.onload = ()=>{
+    
+                const response = xhr.responseText;
+    
+                //alert(response);
+                const article=JSON.parse(response);
+                designation.innerHTML=article.designation;
+                prixUnitaire.innerHTML=article.prixUnitaire;
+            }
+
+        }
+    }
+
+
+  </script>
+
+{% endblock %}

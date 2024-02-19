@@ -23,8 +23,19 @@
                     <li><a href="/">Acceuil</a></li>
                     <li><a href="{{path('app_article')}}">Article</a></li>
                     <li><a href="{{path('app_client')}}">Client</a></li>
-                    <li><a href="/">User</a></li>
                     <li><a href="{{path('app_commande')}}">Commande</a></li>
+
+                    {% if(is_granted('ROLE_ADMIN')) %}
+
+                    <li><a href="/">Parametre</a>
+                        
+                        <ul>
+                            <li><a href="{{path('app_user_index')}}">user</a></li>
+                            <li><a href="{{path('app_role_index')}}">roles</a></li>
+                        </ul>
+                    
+                    </li>
+                    {% endif %}
                 </ul>
                 
                 <div class="search">
@@ -33,13 +44,18 @@
                         <input type="text" autocomplete="off" id="mot" name="mot" onkeydown="touche(event)">
                         <button onclick="chercher()">Rechercher</button>
                         
-                        <a><i class="fa fa-user fa-2x"></i>MK</a>
+                        {% if app.user.username is defined %}
+                        <a><i class="fa fa-user fa-2x"></i>{{app.user.username}}</a>
+                        <li class="nav-item w100 p-2"><a href="{{path('app_logout')}}" class="nav-link">Deconnexion</a></li>
+
+                        {% else %}
+
                         <ul class="dropdown-menu w100 bg_blue">
-                            <li class="nav-item w100 p-2"><a href="/" class="nav-link">Se connecter</a></li>
-                            <li class="nav-item w100 p-2"><a href="" class="nav-link">S'inscrire</a></li>
-                            <li class="nav-item w100 p-2"><a href="" class="nav-link">Deconnexion</a></li>
+                            <li class="nav-item w100 p-2"><a href="{{path('app_login')}}" class="nav-link">Se connecter</a></li>
+                            <li class="nav-item w100 p-2"><a href="{{path('app_register')}}" class="nav-link">S'inscrire</a></li>
                         </ul>
-                    
+
+                        {% endif %}
                 </div>
             </nav>
         </header>

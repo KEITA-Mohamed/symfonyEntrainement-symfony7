@@ -22,3 +22,10 @@ INSERT INTO commande (num_Commande, client_id) VALUES
 ('C00002',3),
 ('C00003',4),
 ('C00004',5);
+
+INSERT INTO article (num_article,designation,prix_unitaire) VALUES
+("A00001", 'fanta', 3.50),
+("A00002", 'coca', 2.50),
+("A00003", 'mangue', 1.50),
+("A00004", 'orange', 0.50),
+("A00005", 'citron', 1.00);
